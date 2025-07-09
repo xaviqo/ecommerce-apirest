@@ -1,2 +1,7 @@
 server:
   port: 8182
+
+tech:
+  xavi:
+    cfg:
+      load-dataset: true
