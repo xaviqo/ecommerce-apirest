@@ -1,0 +1,100 @@
+= Ecommerce SpringBoot API REST
+:author: Xavier Quiñones
+:rouge-style: github
+:!showtitle:
+:icons: font
+:toc: preamble
+
+== Description
+
+Spring Boot REST service with a single endpoint accepting a date, product ID, and brand ID, and returning the applicable rate, its validity period, and the resulting price.
+
+=== Technologies
+
+* Java 21
+* Spring Boot 3.5.3
+** Starters: Web/Data/Validation/Test
+* SpringDoc OpenAPI
+* H2 Database (runtime)
+* Lombok
+* MapStruct
+
+== How to run
+
+* *Requirements:*
+
+** Java 21 JRE && SDK (https://www.baeldung.com/java-sdkman-intro)
+
+=== Clone the repository
+
+----
+git clone https://github.com/xaviqo/ecommerce-apirest.git
+----
+
+=== Move to project folder:
+
+----
+cd ecommerce-apirest
+----
+
+=== Run tests:
+
+----
+./mvnw test
+----
+
+=== Launch the app:
+
+----
+./mvnw spring-boot:run
+----
+
+== Swagger
+
+When you start the application, you can access the Swagger UI, which provides request and response definitions to simplify testing.
+
+* *Swagger UI to your local* (once you start the app): http://localhost:8182/swagger-ui/index.html
+
+== Endpoints
+
+=== GET /api/v1/prices
+
+* Returns the price list that applies to a given product/brand for the supplied date (UTC), expressed as **epoch seconds**
+
+[cols="1,2,2,2"]
+|===
+|Param |Type |Required |Example
+
+|`brandId` |`long` |Sí |`1`
+|`productId` |`long` |Sí |`35455`
+|`targetDate` |`long` |Sí |`1592128800`
+|===
+
+.Example request (cURL)
+[source,bash]
+----
+curl -G "http://localhost:8182/api/v1/prices" \
+  --data-urlencode "brandId=1" \
+  --data-urlencode "productId=35455" \
+  --data-urlencode "targetDate=1592128800"
+----
+
+=== Response 200
+[source,json]
+----
+{
+  "productId": 35455,
+  "brandId": 1,
+  "priceList": 1,
+  "startDate": "2020-06-14T00:00:00Z",
+  "endDate":   "2020-12-31T23:59:59Z",
+  "price": 35.50,
+  "currency": "EUR"
+}
+----
+
+=== Response 404
+[source,json]
+----
+{ "message": "No applicable price …" }
+----
