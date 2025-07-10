@@ -17,4 +17,5 @@ public abstract class EcomBaseException extends RuntimeException {
         super(msg != null ? msg : DEFAULT_ERROR_MSG);
         this.statusCode = statusCode != null ? statusCode : HttpStatus.INTERNAL_SERVER_ERROR;
         this.errorId = UUID.randomUUID();
-    }}
+    }
+}
