@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -29,10 +29,10 @@ public class Price {
     private Long brandId;
 
     @NotNull
-    private LocalDateTime startDate;
+    private Instant startDate;
 
     @NotNull
-    private LocalDateTime endDate;
+    private Instant endDate;
 
     @NotNull
     private Long priceList;

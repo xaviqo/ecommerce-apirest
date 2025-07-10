@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.NoSuchFileException;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Slf4j
@@ -43,8 +44,12 @@ public class DatasetLoader {
                             .map(line -> line.split(","))
                             .map(fields -> Price.builder()
                                     .brandId(Long.parseLong(fields[0]))
-                                    .startDate(LocalDateTime.parse(fields[1]))
-                                    .endDate(LocalDateTime.parse(fields[2]))
+                                    .startDate(LocalDateTime.parse(fields[1])
+                                            .atOffset(ZoneOffset.UTC)
+                                            .toInstant())
+                                    .endDate(LocalDateTime.parse(fields[2])
+                                            .atOffset(ZoneOffset.UTC)
+                                            .toInstant())
                                     .priceList(Long.parseLong(fields[3]))
                                     .productId(Long.parseLong(fields[4]))
                                     .priority(Long.parseLong(fields[5]))
